@@ -16,13 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import MetadataBar from './MetadataBar';
-import { MIN_NUMBER_ITEMS, MAX_NUMBER_ITEMS } from './constants';
+import { ListProps, ListItemProps, ListItemMetaProps } from 'antd-v5/lib/list';
+import { List as AntdList } from 'antd-v5';
 
-export type { MetadataBarProps } from './MetadataBar';
+export type { ListProps, ListItemProps, ListItemMetaProps };
 
-export default MetadataBar;
-
-export { MIN_NUMBER_ITEMS, MAX_NUMBER_ITEMS };
-
-export * from './ContentType';
+export const List = Object.assign(AntdList, {
+  Item: AntdList.Item,
+  ItemMeta: AntdList.Item.Meta,
+});

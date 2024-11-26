@@ -16,13 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import MetadataBar from './MetadataBar';
-import { MIN_NUMBER_ITEMS, MAX_NUMBER_ITEMS } from './constants';
+import { render, screen } from 'spec/helpers/testing-library';
+import { ListProps } from 'antd-v5/lib/list';
+import { List } from '.';
 
-export type { MetadataBarProps } from './MetadataBar';
+const mockedProps: ListProps<any> = {
+  dataSource: ['Item 1', 'Item 2', 'Item 3'],
+  renderItem: item => <div>{item}</div>,
+};
 
-export default MetadataBar;
+test('should render', () => {
+  const { container } = render(<List {...mockedProps} />);
+  expect(container).toBeInTheDocument();
+});
 
-export { MIN_NUMBER_ITEMS, MAX_NUMBER_ITEMS };
+test('should render the correct number of items', () => {
+  render(<List {...mockedProps} />);
 
-export * from './ContentType';
+  const listItemElements = screen.getAllByText(/Item \d/);
+
+  expect(listItemElements.length).toBe(3);
+  listItemElements.forEach((item, index) => {
+    expect(item).toHaveTextContent(`Item ${index + 1}`);
+  });
+});
